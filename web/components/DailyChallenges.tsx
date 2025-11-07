@@ -143,7 +143,7 @@ export function DailyChallenges({
       <div className="mb-6 p-4 bg-gradient-to-r from-amber-500/10 to-orange-500/10 rounded-xl border border-amber-500/30">
         <div className="flex items-center justify-between">
           <div>
-            <div className="text-sm text-slate-300">Today's Rewards</div>
+            <div className="text-sm text-slate-300">Today&apos;s Rewards</div>
             <div className="text-2xl font-bold text-amber-400">+{totalRewards} Bonus Points</div>
           </div>
           <div className="text-4xl">🎁</div>

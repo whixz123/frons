@@ -158,7 +158,7 @@ export function NFTSelectorModal({
             </div>
             <h3 className="text-xl text-gray-800 mb-2">No NFTs Found</h3>
             <p className="text-gray-600 mb-6">
-              We couldn't find any NFTs in your wallet. Try a different wallet or acquire some NFTs!
+              We couldn&apos;t find any NFTs in your wallet. Try a different wallet or acquire some NFTs!
             </p>
             <Button variant="outline" onClick={onClose}>
               Close
