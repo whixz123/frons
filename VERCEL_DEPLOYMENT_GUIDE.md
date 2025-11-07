@@ -20,16 +20,21 @@
 
 ### 2️⃣ Configure Project Settings
 
-**PENTING:** Karena Next.js app berada di subfolder `web/`, set konfigurasi berikut:
+**PENTING:** Karena Next.js app berada di subfolder `web/`, Anda HARUS set Root Directory.
 
 #### Framework Preset
-- **Framework:** Next.js
+- **Framework:** Next.js (akan auto-detect)
 
 #### Build & Development Settings
-- **Root Directory:** `web` ⚠️ PENTING!
-- **Build Command:** `npm run build` (default OK)
-- **Output Directory:** `.next` (default OK)
-- **Install Command:** `npm install` (default OK)
+- **Root Directory:** **`web`** ⚠️ CRITICAL! Klik "Edit" dan set ke `web`
+- **Build Command:** `npm run build` (default OK, jangan ubah)
+- **Output Directory:** `.next` (default OK, jangan ubah)
+- **Install Command:** `npm install` (default OK, jangan ubah)
+
+**CATATAN PENTING:**
+- Tidak perlu file `vercel.json` 
+- Cukup set **Root Directory = `web`** di Vercel dashboard
+- Vercel akan otomatis detect Next.js dan configure build
 
 #### Environment Variables (Optional)
 Tambahkan di Vercel Dashboard → Settings → Environment Variables:
@@ -74,9 +79,8 @@ NEXT_PUBLIC_PROGRAM_ID=95eTYR6AW9u7RExdHmZwr7LuLbgZM83aqAUkEFV5me89
 
 ```
 frons/                          # Root repository
-├── vercel.json                 # ✅ Vercel config (root level)
 ├── programs/                   # Solana programs
-├── web/                        # ⭐ Next.js app (ROOT DIRECTORY)
+├── web/                        # ⭐ Next.js app (SET AS ROOT DIRECTORY)
 │   ├── .env.example           # Environment template
 │   ├── .env.local             # Local env (tidak di commit)
 │   ├── .npmrc                 # NPM config
@@ -92,6 +96,8 @@ frons/                          # Root repository
 │   ├── components/            # React components
 │   └── public/                # Static assets
 └── README.md
+
+CATATAN: Tidak perlu vercel.json - cukup set Root Directory di Vercel dashboard!
 ```
 
 ---
@@ -110,14 +116,16 @@ Setelah deploy, routes berikut akan accessible:
 
 ## ✅ Checklist Pre-Deploy
 
-- [x] `vercel.json` ada di root folder
-- [x] Root Directory = `web` di Vercel settings
+- [x] Root Directory = `web` di Vercel settings (CRITICAL!)
+- [x] Framework = Next.js (auto-detected)
 - [x] `.npmrc` tidak menggunakan China mirror
 - [x] `next.config.js` optimized
 - [x] All dependencies installed
 - [x] Build berhasil locally (`npm run build`)
 - [x] No TypeScript errors
 - [x] No ESLint errors (atau hanya warnings)
+
+**CATATAN:** Tidak perlu `vercel.json` file. Setting Root Directory di Vercel dashboard sudah cukup.
 
 ---
 

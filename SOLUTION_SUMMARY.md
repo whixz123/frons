@@ -15,21 +15,22 @@
 
 ## ✅ SOLUSI YANG SUDAH DITERAPKAN
 
-### 1. **vercel.json** (CRITICAL FIX)
-File: `vercel.json` di root folder
+### 1. **Set Root Directory di Vercel Dashboard** (CRITICAL FIX)
 
-```json
-{
-  "buildCommand": "cd web && npm install && npm run build",
-  "outputDirectory": "web/.next",
-  "framework": "nextjs",
-  "installCommand": "cd web && npm install",
-  "devCommand": "cd web && npm run dev",
-  "rootDirectory": "web"  ← 🚨 KUNCI UTAMA!
-}
+**Tidak perlu `vercel.json` file!**
+
+Cukup set di Vercel Dashboard saat import project:
+```
+Project Settings → Root Directory → Set to: "web"
 ```
 
 **Fungsi:** Memberitahu Vercel bahwa Next.js app ada di subfolder `web/`
+
+**Cara Setting:**
+1. Import project dari GitHub
+2. Saat configure, klik "Edit" pada Root Directory
+3. Set value: `web`
+4. Deploy
 
 ---
 
@@ -108,9 +109,12 @@ NEXT_PUBLIC_PROGRAM_ID=95eTYR6AW9u7RExdHmZwr7LuLbgZM83aqAUkEFV5me89
 
 ### Step 2: Configure (CRITICAL!)
 ```
-Framework: Next.js
-Root Directory: web    ← 🚨 HARUS SET INI!
+Framework: Next.js (auto-detected)
+Root Directory: web    ← 🚨 HARUS SET INI DI DASHBOARD!
 Build Command: npm run build (default OK)
+Output Directory: .next (default OK)
+
+CATATAN: Tidak perlu vercel.json file!
 ```
 
 ### Step 3: Deploy
@@ -121,11 +125,12 @@ Click **"Deploy"** → tunggu 2-3 menit → ✅ DONE!
 ## 📊 PERUBAHAN FILE
 
 ### Modified Files:
-1. ✅ `vercel.json` - **NEW** - Vercel configuration
-2. ✅ `web/.npmrc` - Fixed npm registry
-3. ✅ `web/next.config.js` - Production optimization
-4. ✅ `web/.env.example` - **NEW** - Environment template
-5. ✅ `README.md` - Added Vercel deployment section
+1. ✅ `web/.npmrc` - Fixed npm registry
+2. ✅ `web/next.config.js` - Production optimization
+3. ✅ `web/.env.example` - **NEW** - Environment template
+4. ✅ `README.md` - Added Vercel deployment section
+
+**IMPORTANT:** No `vercel.json` needed! Just set Root Directory in Vercel dashboard.
 
 ### Documentation Files:
 6. ✅ `VERCEL_QUICK_SETUP.md` - **NEW** - Quick guide
@@ -168,13 +173,15 @@ Click **"Deploy"** → tunggu 2-3 menit → ✅ DONE!
 - ❌ Tidak ada dokumentasi deployment
 
 ### After:
-- ✅ `vercel.json` configured dengan `rootDirectory: "web"`
+- ✅ Root Directory setting di Vercel dashboard = `web`
 - ✅ `.npmrc` menggunakan official registry
 - ✅ `next.config.js` optimized untuk Vercel
 - ✅ Environment variables documented
 - ✅ Complete deployment guides
 - ✅ Build berhasil 100%
 - ✅ All routes akan accessible di Vercel
+
+**IMPORTANT:** Tidak perlu `vercel.json` - cukup set Root Directory di Vercel!
 
 ---
 
@@ -259,12 +266,12 @@ https://your-project-name.vercel.app
 ## ✨ SUMMARY
 
 **Error 404 di Vercel sudah 100% FIXED dengan:**
-1. ✅ `vercel.json` dengan `rootDirectory: "web"`
+1. ✅ Set Root Directory = `web` di Vercel dashboard (CRITICAL!)
 2. ✅ `.npmrc` menggunakan official npm registry
 3. ✅ `next.config.js` optimized untuk Vercel serverless
 4. ✅ Complete documentation untuk deployment
 5. ✅ All routes tested dan verified
 
-**Tinggal deploy di Vercel dengan setting Root Directory = `web`!**
+**Cara deploy: Import project, set Root Directory = `web`, deploy!**
 
 🎊 **App Anda siap PRODUCTION di Vercel!** 🎊

@@ -6,13 +6,31 @@
 
 ### ✅ Cara Fix di Vercel Dashboard:
 
+**Saat Import Project Pertama Kali:**
+
+1. Go to: **Vercel Dashboard** → **Add New Project** → **Import Git Repository**
+
+2. Select repository: `whixz123/frons`
+
+3. **Configure Project:**
+   - Click **"Edit"** pada bagian **Root Directory**
+   - Set value: **`web`** ⚠️ CRITICAL!
+   - Framework Preset: **Next.js** (auto-detected)
+   - Build Command: `npm run build` (leave default)
+   - Output Directory: `.next` (leave default)
+   - Install Command: `npm install` (leave default)
+
+4. Click **"Deploy"**
+
+**Jika Sudah Deploy Tapi Error 404:**
+
 1. Go to: **Vercel Dashboard** → **Your Project** → **Settings** → **General**
 
 2. Scroll ke **"Root Directory"**
 
 3. Klik **"Edit"**
 
-4. Set value: `web`
+4. Set value: **`web`**
 
 5. Klik **"Save"**
 
@@ -33,13 +51,19 @@ Vercel Dashboard → Add New Project
 
 #### 2. Configure Build Settings
 
-**CRITICAL - Set This:**
+**CRITICAL - Set Root Directory:**
+
+![Vercel Root Directory Setting](https://docs.vercel.com/docs/concepts/git/monorepos#configuring-the-root-directory)
+
 ```
-Framework: Next.js
-Root Directory: web       ← 🚨 MUST SET THIS!
-Build Command: npm run build (default)
-Output Directory: .next (default)
+Framework Preset: Next.js (auto-detected)
+Root Directory: web              ← 🚨 MUST SET THIS!
+Build Command: npm run build     (default)
+Output Directory: .next          (default)
+Install Command: npm install     (default)
 ```
+
+**CATATAN:** Tidak perlu `vercel.json` file. Vercel akan auto-detect dengan Root Directory setting.
 
 #### 3. Environment Variables (Optional)
 ```bash
