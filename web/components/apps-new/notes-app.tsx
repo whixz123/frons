@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Plus, Trash2, StickyNote } from "lucide-react";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
@@ -11,18 +11,48 @@ interface Note {
   timestamp: number;
 }
 
+const STORAGE_KEY = "frons-notes";
+
 export function NotesApp() {
-  const [notes, setNotes] = useState<Note[]>([
-    {
+  const [notes, setNotes] = useState<Note[]>(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          return parsed.length > 0 ? parsed : [{
+            id: "1",
+            title: "Welcome to frons.id",
+            content: "This is your productivity workspace on Solana. Create notes, track tasks, and stay focused!",
+            timestamp: Date.now(),
+          }];
+        } catch {
+          return [{
+            id: "1",
+            title: "Welcome to frons.id",
+            content: "This is your productivity workspace on Solana. Create notes, track tasks, and stay focused!",
+            timestamp: Date.now(),
+          }];
+        }
+      }
+    }
+    return [{
       id: "1",
       title: "Welcome to frons.id",
       content: "This is your productivity workspace on Solana. Create notes, track tasks, and stay focused!",
       timestamp: Date.now(),
-    },
-  ]);
-  const [selectedNote, setSelectedNote] = useState<string | null>("1");
-  const [currentTitle, setCurrentTitle] = useState("Welcome to frons.id");
-  const [currentContent, setCurrentContent] = useState("This is your productivity workspace on Solana. Create notes, track tasks, and stay focused!");
+    }];
+  });
+  const [selectedNote, setSelectedNote] = useState<string | null>(notes[0]?.id || null);
+  const [currentTitle, setCurrentTitle] = useState(notes[0]?.title || "");
+  const [currentContent, setCurrentContent] = useState(notes[0]?.content || "");
+
+  // Save to localStorage whenever notes change
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
+    }
+  }, [notes]);
 
   const createNewNote = () => {
     const newNote: Note = {
@@ -57,6 +87,23 @@ export function NotesApp() {
       );
     }
   };
+
+  // Auto-save on content change (debounced)
+  useEffect(() => {
+    if (!selectedNote) return;
+    
+    const timer = setTimeout(() => {
+      setNotes((prevNotes) =>
+        prevNotes.map((note) =>
+          note.id === selectedNote
+            ? { ...note, title: currentTitle, content: currentContent, timestamp: Date.now() }
+            : note
+        )
+      );
+    }, 1000); // Auto-save after 1 second of inactivity
+    
+    return () => clearTimeout(timer);
+  }, [currentTitle, currentContent, selectedNote]);
 
   const selectNote = (note: Note) => {
     updateNote(); // Save current note before switching

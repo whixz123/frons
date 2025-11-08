@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Plus, Trash2, CheckCircle2, Circle } from "lucide-react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
@@ -10,13 +10,30 @@ interface Todo {
   completed: boolean;
 }
 
+const STORAGE_KEY = "frons-todos";
+
 export function TodoApp() {
-  const [todos, setTodos] = useState<Todo[]>([
-    { id: "1", text: "Plan today's tasks", completed: true },
-    { id: "2", text: "Work on frons.id design", completed: false },
-    { id: "3", text: "Review Solana integration", completed: false },
-  ]);
+  const [todos, setTodos] = useState<Todo[]>(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try {
+          return JSON.parse(saved);
+        } catch {
+          return [];
+        }
+      }
+    }
+    return [];
+  });
   const [newTodo, setNewTodo] = useState("");
+
+  // Save to localStorage whenever todos change
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
+    }
+  }, [todos]);
 
   const addTodo = () => {
     if (newTodo.trim()) {
