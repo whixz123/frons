@@ -21,8 +21,6 @@ const nextConfig = {
     }
     return config;
   },
-  // Ensure proper output
-  output: 'standalone',
 };
 
 module.exports = nextConfig;
