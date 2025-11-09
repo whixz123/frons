@@ -2,6 +2,7 @@
 
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 
 const NFTProfile = dynamic(() => import("../../components/NFTProfile").then(mod => ({ default: mod.NFTProfile })), { ssr: false });
 const Achievements = dynamic(() => import("../../components/Achievements").then(mod => ({ default: mod.Achievements })), { ssr: false });
@@ -27,28 +28,28 @@ export default function GameFiPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       {/* Header */}
-      <div className="border-b border-slate-800 bg-slate-900/50 backdrop-blur-sm sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 py-4">
+      <div className="border-b border-slate-700/50 bg-slate-900/80 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                🎮 GameFi Dashboard
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-emerald-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent mb-2">
+                GameFi Dashboard
               </h1>
-              <p className="text-sm text-slate-400 mt-1">Level up your productivity with rewards and achievements</p>
+              <p className="text-sm text-slate-400">Level up your productivity with rewards and achievements</p>
             </div>
-            <a
+            <Link
               href="/"
-              className="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition"
+              className="px-4 py-2 rounded-lg bg-slate-800/50 text-slate-300 hover:bg-slate-700/50 hover:text-emerald-400 transition-colors text-sm font-medium"
             >
-              ← Back to Timer
-            </a>
+              ← Back
+            </Link>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid gap-8">
           {/* Top Section - Profile & Level */}
           <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-6">
