@@ -72,7 +72,7 @@ export function NFTProfileCard({
             className="absolute inset-0 rounded-full bg-black/60 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
           >
             <div className="text-center">
-              <Image className="w-6 h-6 text-white mx-auto mb-1" />
+              <Image className="w-6 h-6 text-white mx-auto mb-1" aria-label="Change NFT icon" />
               <span className="text-white text-xs">Change NFT</span>
             </div>
           </button>
@@ -202,7 +202,7 @@ export function NFTProfileCard({
         >
           <div className="flex items-center justify-between text-xs text-gray-600">
             <div className="flex items-center gap-2">
-              <Image className="w-4 h-4 text-purple-500" />
+              <Image className="w-4 h-4 text-purple-500" aria-label="Profile NFT icon" />
               <span>Profile NFT</span>
             </div>
             <button

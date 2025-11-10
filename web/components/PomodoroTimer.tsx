@@ -149,7 +149,7 @@ export function PomodoroTimer() {
       });
     }, 1000);
     return () => clearInterval(ticker);
-  }, [phase, sessionStart]);
+  }, [phase, sessionStart, handleSessionComplete]);
 
   const handleInitialize = useCallback(async () => {
     if (!program) {

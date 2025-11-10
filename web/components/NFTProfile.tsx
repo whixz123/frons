@@ -4,6 +4,7 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey } from "@solana/web3.js";
 import { useCallback, useEffect, useState } from "react";
 import clsx from "clsx";
+import Image from "next/image";
 
 type NFTMetadata = {
   mint: string;
@@ -143,9 +144,11 @@ export function NFTProfile() {
       ) : selectedNFT ? (
         <div className="space-y-4">
           <div className="relative group">
-            <img
+            <Image
               src={selectedNFT.image}
               alt={selectedNFT.name}
+              width={400}
+              height={400}
               className="w-full aspect-square object-cover rounded-xl border-2 border-purple-500/50"
             />
             <button
@@ -216,9 +219,11 @@ export function NFTProfile() {
                     onClick={() => handleSelectNFT(nft)}
                     className="group relative aspect-square rounded-xl overflow-hidden border-2 border-purple-500/30 hover:border-purple-500 transition"
                   >
-                    <img
+                    <Image
                       src={nft.image}
                       alt={nft.name}
+                      width={300}
+                      height={300}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition flex items-end p-3">

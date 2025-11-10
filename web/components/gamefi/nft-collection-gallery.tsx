@@ -88,7 +88,7 @@ export function NFTCollectionGallery({
       {nfts.length === 0 ? (
         <div className="py-12 text-center">
           <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center">
-            <Image className="w-8 h-8 text-gray-400" />
+            <Image className="w-8 h-8 text-gray-400" aria-label="No NFTs icon" />
           </div>
           <p className="text-gray-600">No NFTs found in your wallet</p>
         </div>

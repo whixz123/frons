@@ -8,6 +8,19 @@ const nextConfig = {
   swcMinify: true,
   // Handle external packages that might cause issues
   transpilePackages: ['@solana/web3.js', '@coral-xyz/anchor'],
+  // Image configuration for NFT sources
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+      {
+        protocol: 'http',
+        hostname: '**',
+      },
+    ],
+  },
   // Webpack config untuk handle node modules
   webpack: (config, { isServer }) => {
     if (!isServer) {
