@@ -134,6 +134,32 @@ export function PomodoroTimer() {
     }
   }, [restMinutes, phase]);
 
+  const handleSessionComplete = useCallback(async () => {
+    if (!sessionStart || !program) {
+      return;
+    }
+    const now = Math.floor(Date.now() / 1000);
+    const mode: SessionKind = phase === "focus" ? "focus" : "rest";
+    try {
+      await recordSession(program, {
+        kind: mode,
+        startTs: sessionStart,
+        endTs: now,
+        plannedDurationSeconds: (phase === "focus" ? focusMinutes : restMinutes) * 60,
+        fronTokenAccount: fronTokenAccount ? new PublicKey(fronTokenAccount) : undefined
+      });
+      setFeedback({ level: "success", text: `${mode === "focus" ? "Focus" : "Rest"} session logged on-chain.` });
+      await refreshProfile();
+    } catch (error) {
+      console.error("recordSession", error);
+      setFeedback({ level: "error", text: "Failed to record session." });
+    } finally {
+      setPhase("idle");
+      setSessionStart(null);
+      setSecondsLeft(focusMinutes * 60);
+    }
+  }, [sessionStart, program, phase, focusMinutes, restMinutes, fronTokenAccount, refreshProfile]);
+
   useEffect(() => {
     if (phase === "idle" || !sessionStart) {
       return;
@@ -182,32 +208,6 @@ export function PomodoroTimer() {
     },
     [focusMinutes, restMinutes, program, wallet.publicKey]
   );
-
-  const handleSessionComplete = useCallback(async () => {
-    if (!sessionStart || !program) {
-      return;
-    }
-    const now = Math.floor(Date.now() / 1000);
-    const mode: SessionKind = phase === "focus" ? "focus" : "rest";
-    try {
-      await recordSession(program, {
-        kind: mode,
-        startTs: sessionStart,
-        endTs: now,
-        plannedDurationSeconds: (phase === "focus" ? focusMinutes : restMinutes) * 60,
-        fronTokenAccount: fronTokenAccount ? new PublicKey(fronTokenAccount) : undefined
-      });
-      setFeedback({ level: "success", text: `${mode === "focus" ? "Focus" : "Rest"} session logged on-chain.` });
-      await refreshProfile();
-    } catch (error) {
-      console.error("recordSession", error);
-      setFeedback({ level: "error", text: "Failed to record session." });
-    } finally {
-      setPhase("idle");
-      setSessionStart(null);
-      setSecondsLeft(focusMinutes * 60);
-    }
-  }, [sessionStart, program, phase, focusMinutes, restMinutes, fronTokenAccount, refreshProfile]);
 
   const handleCancel = useCallback(async () => {
     if (!program || !sessionStart) {

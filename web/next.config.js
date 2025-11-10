@@ -1,24 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  output: 'standalone',
   experimental: {
     typedRoutes: true
   },
+  // Optimize for Vercel deployment
   swcMinify: true,
+  // Handle external packages that might cause issues
   transpilePackages: ['@solana/web3.js', '@coral-xyz/anchor'],
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
-      {
-        protocol: 'http',
-        hostname: '**',
-      },
-    ],
-  },
+  // Webpack config untuk handle node modules
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.fallback = {
