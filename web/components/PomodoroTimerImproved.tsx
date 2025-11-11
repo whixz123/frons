@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import clsx from "clsx";
 import { Program } from "@coral-xyz/anchor";
@@ -157,6 +157,40 @@ export function PomodoroTimerImproved() {
     }
   }, [program, wallet.publicKey, refreshProfile]);
 
+  // Define handleSessionComplete early to avoid hoisting issues
+  const handleSessionComplete = useCallback(async () => {
+    if (!sessionStart || !program) {
+      return;
+    }
+    const now = Math.floor(Date.now() / 1000);
+    const mode: SessionKind = phase === "focus" ? "focus" : "rest";
+    try {
+      await recordSession(program, {
+        kind: mode,
+        startTs: sessionStart,
+        endTs: now,
+        plannedDurationSeconds: (phase === "focus" ? focusMinutes : restMinutes) * 60,
+        fronTokenAccount: fronTokenAccount ? new PublicKey(fronTokenAccount) : undefined
+      });
+      setFeedback({ level: "success", text: `${mode === "focus" ? "Focus" : "Rest"} session logged on-chain! 🎉` });
+      await refreshProfile();
+    } catch (error) {
+      console.error("recordSession", error);
+      setFeedback({ level: "error", text: "Failed to record session." });
+    } finally {
+      setPhase("idle");
+      setSessionStart(null);
+      setSecondsLeft(focusMinutes * 60);
+    }
+  }, [sessionStart, program, phase, focusMinutes, restMinutes, fronTokenAccount, refreshProfile]);
+
+  // Store the callback in a ref to avoid stale closures
+  const handleSessionCompleteRef = useRef(handleSessionComplete);
+  
+  useEffect(() => {
+    handleSessionCompleteRef.current = handleSessionComplete;
+  }, [handleSessionComplete]);
+
   useEffect(() => {
     if (phase === "focus") {
       setSecondsLeft(focusMinutes * 60);
@@ -177,14 +211,14 @@ export function PomodoroTimerImproved() {
       setSecondsLeft((current) => {
         if (current <= 1) {
           clearInterval(ticker);
-          void handleSessionComplete();
+          void handleSessionCompleteRef.current();
           return 0;
         }
         return current - 1;
       });
     }, 1000);
     return () => clearInterval(ticker);
-  }, [phase, sessionStart, handleSessionComplete]);
+  }, [phase, sessionStart]);
 
   const handleInitialize = useCallback(async () => {
     if (!program) {
@@ -221,32 +255,6 @@ export function PomodoroTimerImproved() {
     },
     [focusMinutes, restMinutes, program, wallet.publicKey, profile]
   );
-
-  const handleSessionComplete = useCallback(async () => {
-    if (!sessionStart || !program) {
-      return;
-    }
-    const now = Math.floor(Date.now() / 1000);
-    const mode: SessionKind = phase === "focus" ? "focus" : "rest";
-    try {
-      await recordSession(program, {
-        kind: mode,
-        startTs: sessionStart,
-        endTs: now,
-        plannedDurationSeconds: (phase === "focus" ? focusMinutes : restMinutes) * 60,
-        fronTokenAccount: fronTokenAccount ? new PublicKey(fronTokenAccount) : undefined
-      });
-      setFeedback({ level: "success", text: `${mode === "focus" ? "Focus" : "Rest"} session logged on-chain! 🎉` });
-      await refreshProfile();
-    } catch (error) {
-      console.error("recordSession", error);
-      setFeedback({ level: "error", text: "Failed to record session." });
-    } finally {
-      setPhase("idle");
-      setSessionStart(null);
-      setSecondsLeft(focusMinutes * 60);
-    }
-  }, [sessionStart, program, phase, focusMinutes, restMinutes, fronTokenAccount, refreshProfile]);
 
   const handleCancel = useCallback(async () => {
     if (!program || !sessionStart) {
