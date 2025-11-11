@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import clsx from "clsx";
 import { Program } from "@coral-xyz/anchor";
@@ -148,6 +148,13 @@ export function PomodoroTimer() {
     }
   }, [sessionStart, program, phase, focusMinutes, restMinutes, fronTokenAccount, refreshProfile]);
 
+  // Store the callback in a ref to avoid stale closures
+  const handleSessionCompleteRef = useRef(handleSessionComplete);
+  
+  useEffect(() => {
+    handleSessionCompleteRef.current = handleSessionComplete;
+  }, [handleSessionComplete]);
+
   useEffect(() => {
     if (phase === "focus") {
       setSecondsLeft(focusMinutes * 60);
@@ -168,14 +175,14 @@ export function PomodoroTimer() {
       setSecondsLeft((current) => {
         if (current <= 1) {
           clearInterval(ticker);
-          void handleSessionComplete();
+          void handleSessionCompleteRef.current();
           return 0;
         }
         return current - 1;
       });
     }, 1000);
     return () => clearInterval(ticker);
-  }, [phase, sessionStart, handleSessionComplete]);
+  }, [phase, sessionStart]);
 
   const handleInitialize = useCallback(async () => {
     if (!program) {
