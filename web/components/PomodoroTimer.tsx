@@ -134,7 +134,7 @@ export function PomodoroTimer() {
         startTs: sessionStart,
         endTs: now,
         plannedDurationSeconds: (phase === "focus" ? focusMinutes : restMinutes) * 60,
-        fronTokenAccount: fronTokenAccount ? new PublicKey(fronTokenAccount) : undefined
+         fronTokenAccount: fronTokenAccount ? new PublicKey(fronTokenAccount) : undefined
       });
       setFeedback({ level: "success", text: `${mode === "focus" ? "Focus" : "Rest"} session logged on-chain.` });
       await refreshProfile();
