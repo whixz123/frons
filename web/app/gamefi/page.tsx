@@ -28,75 +28,116 @@ export default function GameFiPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-      {/* Header */}
-      <div className="border-b border-slate-700/50 bg-slate-900/80 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-emerald-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent mb-2">
-                GameFi Dashboard
-              </h1>
-              <p className="text-sm text-slate-400">Level up your productivity with rewards and achievements</p>
-            </div>
-            <Link
-              href="/"
-              className="px-4 py-2 rounded-lg bg-slate-800/50 text-slate-300 hover:bg-slate-700/50 hover:text-emerald-400 transition-colors text-sm font-medium"
-            >
-              ← Back
-            </Link>
-          </div>
-        </div>
+    <div className="min-h-screen relative">
+      {/* Animated Background - Same as homepage */}
+      <div className="fixed inset-0 z-0">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-pink-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-blue-500/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid gap-8">
-          {/* Top Section - Profile & Level */}
-          <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-6">
-            <Suspense fallback={<div className="border border-slate-800 rounded-2xl p-6 animate-pulse bg-slate-900/50 h-[400px]" />}>
-              <NFTProfile />
-            </Suspense>
-            <Suspense fallback={<div className="border border-slate-800 rounded-2xl p-6 animate-pulse bg-slate-900/50 h-[400px]" />}>
-              <LevelRank totalPoints={mockData.totalPoints} />
-            </Suspense>
+      <div className="relative z-10">
+        {/* Header */}
+        <div className="border-b border-slate-700/50 glass-strong backdrop-blur-md sticky top-16 z-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass border border-purple-500/20 mb-4">
+                  <span className="text-2xl">🎮</span>
+                  <span className="text-sm font-semibold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                    GameFi Features
+                  </span>
+                </div>
+                <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent mb-3">
+                  Your Gaming Dashboard
+                </h1>
+                <p className="text-lg text-slate-300">Level up your productivity with rewards and achievements</p>
+              </div>
+              <Link
+                href="/"
+                className="group px-6 py-3 rounded-xl glass border border-slate-600 hover:border-purple-500/50 text-slate-300 hover:text-purple-400 transition-all font-semibold flex items-center gap-2"
+              >
+                <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                <span>Back to Home</span>
+              </Link>
+            </div>
           </div>
+        </div>
 
-          {/* Daily Challenges */}
-          <Suspense fallback={<div className="border border-slate-800 rounded-2xl p-6 animate-pulse bg-slate-900/50 h-[400px]" />}>
-            <DailyChallenges
-              focusSessionsToday={mockData.focusSessionsToday}
-              restSessionsToday={mockData.restSessionsToday}
-              pointsToday={mockData.pointsToday}
-              currentStreak={mockData.currentStreak}
-            />
-          </Suspense>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="grid gap-8">
+            {/* Top Section - Profile & Level */}
+            <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-6">
+              <Suspense fallback={
+                <div className="glass-strong border border-slate-700/50 rounded-3xl p-6 animate-pulse h-[400px]">
+                  <div className="h-full bg-slate-800/30 rounded-2xl"></div>
+                </div>
+              }>
+                <NFTProfile />
+              </Suspense>
+              <Suspense fallback={
+                <div className="glass-strong border border-slate-700/50 rounded-3xl p-6 animate-pulse h-[400px]">
+                  <div className="h-full bg-slate-800/30 rounded-2xl"></div>
+                </div>
+              }>
+                <LevelRank totalPoints={mockData.totalPoints} />
+              </Suspense>
+            </div>
 
-          {/* Achievements */}
-          <Suspense fallback={<div className="border border-slate-800 rounded-2xl p-6 animate-pulse bg-slate-900/50 h-[600px]" />}>
-            <Achievements
-              focusSessions={mockData.focusSessions}
-              restSessions={mockData.restSessions}
-              totalPoints={mockData.totalPoints}
-              longestStreak={mockData.longestStreak}
-            />
-          </Suspense>
+            {/* Daily Challenges */}
+            <Suspense fallback={
+              <div className="glass-strong border border-slate-700/50 rounded-3xl p-8 animate-pulse h-[300px]">
+                <div className="h-full bg-slate-800/30 rounded-2xl"></div>
+              </div>
+            }>
+              <DailyChallenges
+                focusSessionsToday={mockData.focusSessionsToday}
+                restSessionsToday={mockData.restSessionsToday}
+                pointsToday={mockData.pointsToday}
+                currentStreak={mockData.currentStreak}
+              />
+            </Suspense>
 
-          {/* Streak Calendar */}
-          <Suspense fallback={<div className="border border-slate-800 rounded-2xl p-6 animate-pulse bg-slate-900/50 h-[500px]" />}>
-            <StreakCalendar
-              history={mockData.history}
-              currentStreak={mockData.currentStreak}
-            />
-          </Suspense>
+            {/* Achievements */}
+            <Suspense fallback={
+              <div className="glass-strong border border-slate-700/50 rounded-3xl p-8 animate-pulse h-[600px]">
+                <div className="h-full bg-slate-800/30 rounded-2xl"></div>
+              </div>
+            }>
+              <Achievements
+                focusSessions={mockData.focusSessions}
+                restSessions={mockData.restSessions}
+                totalPoints={mockData.totalPoints}
+                longestStreak={mockData.longestStreak}
+              />
+            </Suspense>
 
-          {/* Leaderboard */}
-          <Suspense fallback={<div className="border border-slate-800 rounded-2xl p-6 animate-pulse bg-slate-900/50 h-[600px]" />}>
-            <Leaderboard
-              userPoints={mockData.totalPoints}
-              userFocusSessions={mockData.focusSessions}
-              userStreak={mockData.currentStreak}
-            />
-          </Suspense>
+            {/* Streak Calendar */}
+            <Suspense fallback={
+              <div className="glass-strong border border-slate-700/50 rounded-3xl p-8 animate-pulse h-[500px]">
+                <div className="h-full bg-slate-800/30 rounded-2xl"></div>
+              </div>
+            }>
+              <StreakCalendar
+                history={mockData.history}
+                currentStreak={mockData.currentStreak}
+              />
+            </Suspense>
+
+            {/* Leaderboard */}
+            <Suspense fallback={
+              <div className="glass-strong border border-slate-700/50 rounded-3xl p-8 animate-pulse h-[600px]">
+                <div className="h-full bg-slate-800/30 rounded-2xl"></div>
+              </div>
+            }>
+              <Leaderboard
+                userPoints={mockData.totalPoints}
+                userFocusSessions={mockData.focusSessions}
+                userStreak={mockData.currentStreak}
+              />
+            </Suspense>
 
           {/* Theme Customization */}
           <Suspense fallback={<div className="border border-slate-800 rounded-2xl p-6 animate-pulse bg-slate-900/50 h-[500px]" />}>

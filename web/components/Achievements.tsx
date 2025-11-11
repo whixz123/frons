@@ -107,52 +107,62 @@ export function Achievements({ focusSessions, restSessions, totalPoints, longest
   };
 
   return (
-    <div className="border border-amber-500/30 bg-gradient-to-br from-amber-900/20 to-orange-900/20 rounded-2xl p-6">
-      <div className="flex items-center justify-between mb-6">
-        <h3 className="text-2xl font-bold text-amber-300 flex items-center gap-2">
-          🏆 Achievements
-        </h3>
+    <div className="glass-strong border border-purple-500/30 rounded-3xl p-8 shadow-xl">
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-2xl shadow-lg">
+              🏆
+            </div>
+            <h3 className="text-3xl font-bold bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">
+              Achievements
+            </h3>
+          </div>
+          <p className="text-slate-400 ml-15">Unlock rewards by completing challenges</p>
+        </div>
         <div className="text-right">
-          <div className="text-2xl font-bold text-amber-400">{unlockedCount}/{totalCount}</div>
-          <div className="text-xs text-slate-400">Unlocked</div>
+          <div className="text-4xl font-bold bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">
+            {unlockedCount}/{totalCount}
+          </div>
+          <div className="text-sm text-slate-400">Unlocked</div>
         </div>
       </div>
 
       {/* Progress Bar */}
-      <div className="mb-6">
-        <div className="flex justify-between text-sm mb-2">
-          <span className="text-slate-300">Overall Progress</span>
-          <span className="text-amber-400 font-semibold">{Math.round((unlockedCount / totalCount) * 100)}%</span>
+      <div className="mb-8 p-4 rounded-2xl bg-slate-900/50 border border-slate-700/50">
+        <div className="flex justify-between text-sm mb-3">
+          <span className="text-slate-300 font-medium">Overall Progress</span>
+          <span className="text-amber-400 font-bold text-lg">{Math.round((unlockedCount / totalCount) * 100)}%</span>
         </div>
-        <div className="h-3 bg-slate-800 rounded-full overflow-hidden">
+        <div className="h-4 bg-slate-800 rounded-full overflow-hidden border border-slate-700">
           <div
-            className="h-full bg-gradient-to-r from-amber-500 to-orange-500 transition-all duration-500"
+            className="h-full bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-500 transition-all duration-500 shadow-lg"
             style={{ width: `${(unlockedCount / totalCount) * 100}%` }}
           />
         </div>
       </div>
 
       {/* Achievements Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-[600px] overflow-y-auto pr-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
         {achievementProgress.map((achievement) => (
           <div
             key={achievement.id}
             className={clsx(
-              "relative p-4 rounded-xl border-2 transition-all",
+              "relative p-5 rounded-2xl border-2 transition-all duration-300 hover:scale-[1.02]",
               achievement.unlocked
-                ? `bg-gradient-to-br ${rarityColors[achievement.rarity]} ${rarityBorders[achievement.rarity]}`
-                : "bg-slate-800/50 border-slate-700 opacity-60"
+                ? `bg-gradient-to-br ${rarityColors[achievement.rarity]} ${rarityBorders[achievement.rarity]} shadow-lg`
+                : "bg-slate-900/80 border-slate-700 backdrop-blur-sm"
             )}
           >
             {/* Rarity Badge */}
-            <div className="absolute top-2 right-2">
+            <div className="absolute top-3 right-3">
               <span
                 className={clsx(
-                  "text-xs px-2 py-1 rounded-full font-semibold uppercase",
-                  achievement.rarity === "common" && "bg-slate-500/20 text-slate-300",
-                  achievement.rarity === "rare" && "bg-blue-500/20 text-blue-300",
-                  achievement.rarity === "epic" && "bg-purple-500/20 text-purple-300",
-                  achievement.rarity === "legendary" && "bg-amber-500/20 text-amber-300"
+                  "text-xs px-3 py-1 rounded-full font-bold uppercase tracking-wide",
+                  achievement.rarity === "common" && "bg-slate-500/30 text-slate-200 border border-slate-400/30",
+                  achievement.rarity === "rare" && "bg-blue-500/30 text-blue-200 border border-blue-400/30",
+                  achievement.rarity === "epic" && "bg-purple-500/30 text-purple-200 border border-purple-400/30",
+                  achievement.rarity === "legendary" && "bg-amber-500/30 text-amber-200 border border-amber-400/30"
                 )}
               >
                 {achievement.rarity}
@@ -160,26 +170,41 @@ export function Achievements({ focusSessions, restSessions, totalPoints, longest
             </div>
 
             {/* Icon */}
-            <div className="text-4xl mb-3 filter" style={{ filter: achievement.unlocked ? 'none' : 'grayscale(100%)' }}>
+            <div 
+              className={clsx(
+                "text-5xl mb-4 transition-all duration-300",
+                achievement.unlocked ? "filter-none" : "grayscale opacity-50"
+              )}
+            >
               {achievement.icon}
             </div>
 
             {/* Name & Description */}
-            <div className="mb-3">
-              <h4 className="font-bold text-white mb-1">{achievement.name}</h4>
-              <p className="text-xs text-slate-300">{achievement.description}</p>
+            <div className="mb-4">
+              <h4 className={clsx(
+                "font-bold text-lg mb-2",
+                achievement.unlocked ? "text-white" : "text-slate-400"
+              )}>
+                {achievement.name}
+              </h4>
+              <p className={clsx(
+                "text-sm leading-relaxed",
+                achievement.unlocked ? "text-slate-200" : "text-slate-500"
+              )}>
+                {achievement.description}
+              </p>
             </div>
 
             {/* Progress */}
             {!achievement.unlocked && (
-              <div>
-                <div className="flex justify-between text-xs mb-1">
-                  <span className="text-slate-400">Progress</span>
-                  <span className="text-white font-semibold">
+              <div className="space-y-2">
+                <div className="flex justify-between text-xs">
+                  <span className="text-slate-400 font-medium">Progress</span>
+                  <span className="text-slate-300 font-bold">
                     {achievement.current}/{achievement.requirement}
                   </span>
                 </div>
-                <div className="h-2 bg-slate-900 rounded-full overflow-hidden">
+                <div className="h-2.5 bg-slate-800 rounded-full overflow-hidden border border-slate-700">
                   <div
                     className="h-full bg-gradient-to-r from-emerald-500 to-cyan-500 transition-all duration-500"
                     style={{ width: `${achievement.progress}%` }}
@@ -189,9 +214,11 @@ export function Achievements({ focusSessions, restSessions, totalPoints, longest
             )}
 
             {achievement.unlocked && (
-              <div className="flex items-center gap-2 text-sm font-semibold text-white">
-                <span>✓</span>
-                <span>Unlocked!</span>
+              <div className="flex items-center gap-2 text-sm font-bold">
+                <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
+                  <span className="text-white">✓</span>
+                </div>
+                <span className="text-white">Unlocked!</span>
               </div>
             )}
           </div>
