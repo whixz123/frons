@@ -122,18 +122,6 @@ export function PomodoroTimer() {
     }
   }, [program, wallet.publicKey, refreshProfile]);
 
-  useEffect(() => {
-    if (phase === "focus") {
-      setSecondsLeft(focusMinutes * 60);
-    }
-  }, [focusMinutes, phase]);
-
-  useEffect(() => {
-    if (phase === "rest") {
-      setSecondsLeft(restMinutes * 60);
-    }
-  }, [restMinutes, phase]);
-
   const handleSessionComplete = useCallback(async () => {
     if (!sessionStart || !program) {
       return;
@@ -159,6 +147,18 @@ export function PomodoroTimer() {
       setSecondsLeft(focusMinutes * 60);
     }
   }, [sessionStart, program, phase, focusMinutes, restMinutes, fronTokenAccount, refreshProfile]);
+
+  useEffect(() => {
+    if (phase === "focus") {
+      setSecondsLeft(focusMinutes * 60);
+    }
+  }, [focusMinutes, phase]);
+
+  useEffect(() => {
+    if (phase === "rest") {
+      setSecondsLeft(restMinutes * 60);
+    }
+  }, [restMinutes, phase]);
 
   useEffect(() => {
     if (phase === "idle" || !sessionStart) {
