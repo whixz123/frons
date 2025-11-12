@@ -139,13 +139,17 @@ export default function GameFiPage() {
               />
             </Suspense>
 
-          {/* Theme Customization */}
-          <Suspense fallback={<div className="border border-slate-800 rounded-2xl p-6 animate-pulse bg-slate-900/50 h-[500px]" />}>
-            <ThemeCustomization userPoints={mockData.totalPoints} />
-          </Suspense>
+            {/* Theme Customization */}
+            <Suspense fallback={
+              <div className="glass-strong border border-slate-700/50 rounded-3xl p-8 animate-pulse h-[500px]">
+                <div className="h-full bg-slate-800/30 rounded-2xl"></div>
+              </div>
+            }>
+              <ThemeCustomization userPoints={mockData.totalPoints} />
+            </Suspense>
+          </div>
         </div>
       </div>
     </div>
   );
 }
-
