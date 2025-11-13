@@ -7,7 +7,27 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "frons.id - Productivity Workspace",
   description: "Your all-in-one productivity workspace with Pomodoro timer, tasks, notes, and GameFi rewards",
-  manifest: "/manifest.json"
+  manifest: "/manifest.json",
+  metadataBase: new URL('https://frons.vercel.app'),
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 5,
+    userScalable: true,
+  },
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#0f172a' }
+  ],
+  openGraph: {
+    title: "frons.id - Productivity Workspace",
+    description: "Your all-in-one productivity workspace with Pomodoro timer, tasks, notes, and GameFi rewards",
+    type: "website",
+  },
+  icons: {
+    icon: '/icons/icon-192x192.png',
+    apple: '/icons/icon-192x192.png',
+  },
 };
 
 export default function RootLayout({
