@@ -1,12 +1,11 @@
 # Dependencies
 node_modules/
-web/node_modules/
-web/package-lock.json
+package-lock.json
 
 # Build outputs
 target/
-web/.next/
-web/out/
+.next/
+out/
 dist/
 build/
 

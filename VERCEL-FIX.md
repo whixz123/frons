@@ -53,6 +53,7 @@ Error: Command "cd web && npm install" exited with 1
 Tambahkan jika perlu:
 ```
 NODE_OPTIONS = --max-old-space-size=4096
+
 ```
 
 ### 5. Redeploy
