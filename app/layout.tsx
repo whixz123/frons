@@ -7,7 +7,6 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "frons.id - Productivity Workspace",
   description: "Your all-in-one productivity workspace with Pomodoro timer, tasks, notes, and GameFi rewards",
-  manifest: "/manifest.json",
   metadataBase: new URL('https://frons.vercel.app'),
   viewport: {
     width: 'device-width',
@@ -37,6 +36,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+      </head>
       <body className="min-h-screen bg-slate-950 text-slate-100 antialiased relative overflow-x-hidden">
         {/* Animated Background */}
         <div className="fixed inset-0 z-0">
