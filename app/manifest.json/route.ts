@@ -1,0 +1,34 @@
+import { NextResponse } from 'next/server';
+
+export async function GET() {
+  const manifest = {
+    name: "frons.id - Productivity Workspace",
+    short_name: "frons.id",
+    start_url: "/",
+    display: "standalone",
+    background_color: "#020817",
+    theme_color: "#10b981",
+    description: "Your all-in-one productivity workspace with Pomodoro timer, tasks, notes, and GameFi rewards powered by Solana",
+    icons: [
+      {
+        src: "/icons/icon-192x192.png",
+        sizes: "192x192",
+        type: "image/png",
+        purpose: "any maskable"
+      },
+      {
+        src: "/icons/icon-512x512.png",
+        sizes: "512x512",
+        type: "image/png",
+        purpose: "any maskable"
+      }
+    ]
+  };
+
+  return NextResponse.json(manifest, {
+    headers: {
+      'Content-Type': 'application/manifest+json',
+      'Cache-Control': 'public, max-age=31536000, immutable',
+    },
+  });
+}
