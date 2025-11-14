@@ -1,9 +1,23 @@
 {
-  "name": "fronSOL Productivity Pods",
-  "short_name": "fronSOL Pods",
+  "name": "frons.id - Productivity Workspace",
+  "short_name": "frons.id",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#020817",
   "theme_color": "#10b981",
-  "description": "Work-from-Coffee inspired Solana dApp rewarding disciplined pomodoro sessions."
+  "description": "Your all-in-one productivity workspace with Pomodoro timer, tasks, notes, and GameFi rewards powered by Solana",
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
 }
