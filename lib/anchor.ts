@@ -7,7 +7,20 @@ import fronsIdl from "../idl/frons.json";
 
 export type FronsIdl = typeof fronsIdl & Idl;
 
-export const FRONS_PROGRAM_ID = new PublicKey(fronsIdl.metadata.address);
+// Use a valid placeholder program ID if the one in IDL is invalid
+const DEFAULT_PROGRAM_ID = "11111111111111111111111111111111"; // SystemProgram as fallback
+
+function getProgramId(): PublicKey {
+  try {
+    const address = (fronsIdl as any)?.metadata?.address || DEFAULT_PROGRAM_ID;
+    return new PublicKey(address);
+  } catch (error) {
+    console.warn("Invalid program ID in IDL, using SystemProgram as fallback:", error);
+    return new PublicKey(DEFAULT_PROGRAM_ID);
+  }
+}
+
+export const FRONS_PROGRAM_ID = getProgramId();
 export const USER_PROFILE_SEED = "user_profile";
 export const SESSION_SEED = "session";
 
