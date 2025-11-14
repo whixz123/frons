@@ -1,53 +1,53 @@
-# Vercel Deployment Fix - Manual Steps Required
+# Vercel Deployment Fix - URGENT ACTION REQUIRED ⚠️
 
-## 🚨 PENTING: Anda Perlu Update Vercel Dashboard Settings!
+## 🚨 CRITICAL ERROR: Root Directory Not Set!
 
-Berdasarkan deployment logs, Vercel masih build dari commit lama. Ikuti langkah ini:
-
-## 📋 Langkah-Langkah Fix di Vercel Dashboard:
-
-### 1. Buka Vercel Project Settings
-- Pergi ke: https://vercel.com/whixz123s-projects/fronss
-- Klik **"Settings"** tab
-
-### 2. Update "Root Directory"
-Di bagian **"General"** atau **"Build & Development Settings"**:
-
+**Error Message:**
 ```
-Root Directory: web
+sh: line 1: cd: web: No such file or directory
+Error: Command "cd web && npm install" exited with 1
 ```
 
-**PENTING:** Set root directory ke `web` karena Next.js app ada di subfolder!
+**Root Cause:** Vercel doesn't know your Next.js app is in the `web/` subfolder!
 
-### 3. Update Build & Development Settings
+---
 
-Klik **"Build & Development Settings"**:
+## ✅ FIX STEPS (MUST DO NOW):
 
-#### Framework Preset:
-```
-Next.js
-```
+### Step 1: Go to Vercel Dashboard
+1. Open: https://vercel.com/whixz123s-projects/fronss/settings
+2. Click **"Settings"** tab (left sidebar)
 
-#### Build Command (Override):
-```
-npm run build
-```
+### Step 2: Set Root Directory ⭐ MOST IMPORTANT!
+1. Scroll to section: **"Root Directory"**
+2. Click **"Edit"** button
+3. Type: `web`
+4. Click **"Save"**
 
-#### Output Directory:
-```
-.next
-```
-(Karena root sudah di `web/`, jadi cukup `.next` saja)
+**THIS IS THE CRITICAL FIX!** Without this, Vercel can't find your Next.js app.
 
-#### Install Command (Override):
-```
-npm install
-```
+### Step 3: Verify Framework Settings
+1. Stay in **Settings** tab
+2. Click **"General"** in left sidebar
+3. Verify:
+   - **Framework Preset:** Next.js ✅
+   - **Root Directory:** web ✅
 
-#### Development Command:
-```
-npm run dev
-```
+### Step 4: Check Build Settings (Optional)
+1. Click **"Build & Development Settings"**
+2. Should auto-detect after Root Directory is set:
+   - **Build Command:** (empty = use Next.js default)
+   - **Output Directory:** (empty = use Next.js default)
+   - **Install Command:** (empty = use npm install default)
+
+**Leave these EMPTY unless you have specific needs!**
+
+### Step 5: Redeploy
+1. Go back to **"Deployments"** tab
+2. Wait for auto-deploy to trigger (from commit `5aac2e7`)
+3. OR click **"..."** menu → **"Redeploy"**
+
+---
 
 ### 4. Environment Variables (Optional)
 Tambahkan jika perlu:
