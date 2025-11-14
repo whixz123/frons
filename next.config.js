@@ -23,7 +23,6 @@ const nextConfig = {
         zlib: false,
         path: false,
         os: false,
-        'supports-color': false,
       };
     }
     // Ignore node-specific modules
@@ -32,15 +31,7 @@ const nextConfig = {
       'utf-8-validate': 'commonjs utf-8-validate',
       'bufferutil': 'commonjs bufferutil',
       'encoding': 'commonjs encoding',
-      'supports-color': 'commonjs supports-color',
     });
-    
-    // Ignore warnings from specific modules
-    config.ignoreWarnings = [
-      { module: /node_modules\/engine\.io-client/ },
-      { module: /node_modules\/socket\.io-client/ },
-      { module: /node_modules\/@toruslabs/ },
-    ];
     
     return config;
   },
