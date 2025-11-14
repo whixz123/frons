@@ -8,50 +8,6 @@ const nextConfig = {
   swcMinify: true,
   // Handle external packages that might cause issues
   transpilePackages: ['@solana/web3.js', '@coral-xyz/anchor'],
-  // Add proper headers for CSP and security
-  async headers() {
-    return [
-      {
-        source: '/:path*',
-        headers: [
-          {
-            key: 'Content-Security-Policy',
-            value: [
-              "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live https://*.vercel-scripts.com",
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-              "img-src 'self' data: https: blob: https://*.vercel.app",
-              "font-src 'self' data: https://fonts.gstatic.com",
-              "connect-src 'self' https://*.solana.com https://*.helius-rpc.com https://*.rpcpool.com https://api.devnet.solana.com https://api.mainnet-beta.solana.com wss://*.solana.com wss://*.helius-rpc.com https://vitals.vercel-insights.com https://*.vercel.app",
-              "frame-src 'self' https://vercel.live",
-              "media-src 'self' data: blob:",
-              "worker-src 'self' blob:",
-              "object-src 'none'",
-              "base-uri 'self'",
-              "form-action 'self'",
-              "frame-ancestors 'self'",
-            ].join('; ')
-          },
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff'
-          },
-          {
-            key: 'X-Frame-Options',
-            value: 'SAMEORIGIN'
-          },
-          {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block'
-          },
-          {
-            key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(), geolocation=()'
-          }
-        ]
-      }
-    ];
-  },
   // Webpack config untuk handle node modules
   webpack: (config, { isServer }) => {
     if (!isServer) {
